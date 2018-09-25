@@ -9,21 +9,30 @@ def get_LCS_sequence(sentenceA,sentenceB):
         for i in range(width):
                 l = [0 for n in range(length)]
                 matrix.append(l)
-        max_match = 0
+                
         for i in range(length):
                 for j in range(width):
-                        if sentenceA[j] == sentenceB[i]:
-                                for index in range(j:width):
-                                        matrix[i][index] = marmax_match + 1
-                                        break;
-                        matrix[i][j] = max_match
+                        up_pos = 0
+                        left_pos = 0
+                        parent_pos = 0
+                        max_match = 0
 
+                        if j - 1 > 0:
+                                up_pos = matrix[j-1][i]
+                        if i - 1 > 0:
+                                left_pos = matrix[j][i-1]
+
+                        if i - 1 > 0 and j - 1 > 0:
+                                parent_pos = matrix[j-1][i-1]
+
+                        if sentenceA[j] == sentenceB[i]:
+                                max_match = max(up_pos, left_pos, parent_pos + 1)
+                        else:
+                                max_match = max(up_pos, left_pos)
+
+                        matrix[j][i] = max_match
 
         return matrix
-
-
-
-
 
 
 
